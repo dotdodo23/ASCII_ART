@@ -28,8 +28,9 @@ def video_to_ascii(src):
     cap = cv.VideoCapture(src)
     fps = cap.get(cv.CAP_PROP_FPS)
     f_time = 1000000000/(fps)
-    next_time = time_ns()
+    next_time = time_ns() + f_time
     nframe = 0
+    os.system('cls')
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
@@ -44,7 +45,7 @@ def video_to_ascii(src):
         while (next_time - time_ns())>=0:
             pass
         next_time += f_time
-        os.system('cls')
+        print("%c[%d;%df" % (0x1B, 0, 0), end='')
         for i in tmp:
             for j in i:
                 sys.stdout.write('%c' % chr(j))
